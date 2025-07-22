@@ -5,6 +5,181 @@ meta:
   created: 1753182150969
   modified: 1753182150969
   description: ""
+collection:
+  - name: accounts
+    meta:
+      id: fld_97d76cbeac2f4a478f82149fb83c681f
+      created: 1753186217297
+      modified: 1753186217297
+      sortKey: -1753186217297
+      description: Operations related to account management (retrieval and balance updates)
+    children:
+      - url: "{{ _.base_url }}/accounts"
+        name: List all accounts
+        meta:
+          id: req_8a9026d9224e4af281c04a943d53e673
+          created: 1753186217325
+          modified: 1753186217325
+          isPrivate: false
+          description: Returns a list of all accounts with basic details.
+          sortKey: -1753186217325
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/accounts"
+        name: Create a new account
+        meta:
+          id: req_39c74961162e4d4ea7358a68ae88abd9
+          created: 1753186217327
+          modified: 1753186217327
+          isPrivate: false
+          description: Creates a new account with an initial balance. The account ID is
+            automatically generated.
+          sortKey: -1753186217327
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "type": "savings",
+              "initial_balance": 5000
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/accounts/{{ _.accountId }}"
+        name: Retrieve a single account
+        meta:
+          id: req_62e9d60bd17243ffb786459b2f0f7154
+          created: 1753186217330
+          modified: 1753186217330
+          isPrivate: false
+          description: Returns details for the specified account including current balance.
+          sortKey: -1753186217330
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/accounts/{{ _.accountId }}/debit"
+        name: Debit an account
+        meta:
+          id: req_0b47c7855bf44a63bf0119598a7dcf49
+          created: 1753186217332
+          modified: 1753186217332
+          isPrivate: false
+          description: Decreases the account's balance by the specified amount.
+          sortKey: -1753186217332
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "amount": 100
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/accounts/{{ _.accountId }}/credit"
+        name: Credit an account
+        meta:
+          id: req_4bd150ec952f423f93da37e1c29540f5
+          created: 1753186217335
+          modified: 1753186217335
+          isPrivate: false
+          description: Increases the account's balance by the specified amount.
+          sortKey: -1753186217335
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "amount": 100
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: health
+    meta:
+      id: fld_bc38d022f4874f5290c97caa789fd761
+      created: 1753186217310
+      modified: 1753186217310
+      sortKey: -1753186217310
+      description: Health check endpoints for monitoring service status
+    children:
+      - url: "{{ _.base_url }}/health"
+        name: Health check endpoint
+        meta:
+          id: req_520bf729cd7e441bb6ffeef7aa1efafd
+          created: 1753186217315
+          modified: 1753186217315
+          isPrivate: false
+          description: Returns the API's health status
+          sortKey: -1753186217315
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/health"
+        name: Health check endpoint (HEAD)
+        meta:
+          id: req_c8c1514051fb42b3bd8a4cebe540e0e1
+          created: 1753186217323
+          modified: 1753186217323
+          isPrivate: false
+          description: Returns the API's health status without body
+          sortKey: -1753186217323
+        method: HEAD
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
 cookieJar:
   name: Default Jar
   meta:
@@ -16,8 +191,22 @@ environments:
   meta:
     id: env_cb90196f52111b52e4b745fcf72803a2506355ed
     created: 1753182151011
-    modified: 1753182151011
+    modified: 1753186217281
     isPrivate: false
+  data:
+    base_url: "{{ _.scheme }}://{{ _.host }}{{ _.base_path }}"
+  subEnvironments:
+    - name: OpenAPI env kong-1b683354d5euvprhl.kongcloud.dev
+      meta:
+        id: env_2327dbafcaad44718442e84ac138b76b
+        created: 1753186217293
+        modified: 1753186217293
+        isPrivate: false
+        sortKey: 1753186217293
+      data:
+        scheme: https
+        base_path: ""
+        host: kong-1b683354d5euvprhl.kongcloud.dev
 spec:
   contents:
     openapi: 3.0.3
